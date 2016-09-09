@@ -17,10 +17,12 @@ if [ "${AUTHORIZED_KEYS}" != "**None**" ]; then
             echo "$x" >> /root/.ssh/authorized_keys
         fi
     done
+    ROOT_PASSWORD=${ROOT_PASS:-$(pwgen -s 12 1)}
+else
+    echo "Changing password to ${ROOT_PASSWORD}"
 fi
 
 
-echo "Changing password to ${ROOT_PASSWORD}"
 echo root:${ROOT_PASSWORD} | chpasswd
 
 exec /usr/sbin/sshd -D
